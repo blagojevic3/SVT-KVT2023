@@ -1,0 +1,15 @@
+package model;
+
+public enum EReportReason {
+    BREAKING_RULES,
+    HARASSMENT,
+    HATE,
+    SHARING_PERSONAL_INFORMATION,
+    IMPERSONATION,
+    COPYRIGHT_VIOLATION,
+    TRADEMARK_VIOLATION,
+    SPAM,
+    SELF_HARM_OR_SUICIDE,
+    OTHER
+
+}
