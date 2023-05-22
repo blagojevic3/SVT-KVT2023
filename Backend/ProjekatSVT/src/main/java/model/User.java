@@ -3,18 +3,22 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements Serializable {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId",unique = true,nullable = false)
 
-    private Integer id;
+    private Integer userId;
 
     @Column(name="username", unique = true,nullable = false)
     private String username;
@@ -35,9 +39,18 @@ public class User {
     @Column(name = "lastName",nullable = false)
     private  String lastName;
 
-    public User(Integer id, String username, String password, String email, LocalDateTime lastlogin, String firstName, String lastName) {
+
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(nullable = true)
+    private Set<GroupAdmin> groupAdmins;
+
+    public User(Integer userId, String username, String password, String email, LocalDateTime lastlogin, String firstName, String lastName) {
         super();
-        this.id = id;
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -51,11 +64,11 @@ public class User {
     }
 
     public Integer getId() {
-        return id;
+        return userId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -104,6 +117,21 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
 
