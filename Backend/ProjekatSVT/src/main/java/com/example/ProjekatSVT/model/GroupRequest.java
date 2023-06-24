@@ -1,19 +1,20 @@
-package model;
+package com.example.ProjekatSVT.model;
 
 
-import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
+
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "groupRequest")
+@Table(name = "groupRequests")
 public class GroupRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "groupReqId",unique = true,nullable = false)
-    private Integer groupReqId;
+    @Column(name = "id",unique = true,nullable = false)
+    private Integer id;
 
     @Column(name = "approved")
     private Boolean approved;

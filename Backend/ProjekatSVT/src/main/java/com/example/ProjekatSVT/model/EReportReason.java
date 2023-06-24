@@ -1,4 +1,4 @@
-package model;
+package com.example.ProjekatSVT.model;
 
 public enum EReportReason {
     BREAKING_RULES,

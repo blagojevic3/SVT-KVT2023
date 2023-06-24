@@ -1,25 +1,33 @@
-package model;
+package com.example.ProjekatSVT.model;
 
 
-import jakarta.persistence.*;
 
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
-@Table(name = "reaction")
+@Table(name = "reactions")
 
 public class Reaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reactionId",unique = true,nullable = false)   //nejasno da li je id userid ili reactionid
-    private Integer reactionId;
+    @Column(name = "id",unique = true,nullable = false)   //nejasno da li je id userid ili reactionid
+    private Integer id;
 
-    @Column(name = "type")
+    @Column(name = "type",nullable = false)
     @Enumerated
     private EReactionType type;
 
-    @Column(name = "timestamp")
+    @Column(name = "timestamp",nullable = false)
     private LocalDate timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER)
