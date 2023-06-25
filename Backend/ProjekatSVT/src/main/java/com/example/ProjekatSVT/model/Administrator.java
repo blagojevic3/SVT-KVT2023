@@ -20,14 +20,14 @@ import java.util.Set;
 @Table(name="administrators")
 public class Administrator extends User{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "admin")
     private Set<Banned> bans = new HashSet<Banned>();
 
 
-
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
 
 
 

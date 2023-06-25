@@ -1,0 +1,8 @@
+<div class="content" fxLayout="row" fxLayoutAlign="center none">
+
+  <app-card (apiClick)="makeRequest($event)" [responseObj]="whoamIResponse" apiText="/api/users/whoami"
+    content='The regular endpoint which returns the current user information. You have to sign in as either a User or an Admin to gain the access to this endpoint.'
+    fxFlex subTitle="Authorized role: USER" title='"Who am I"'>
+  </app-card>
+
+</div>

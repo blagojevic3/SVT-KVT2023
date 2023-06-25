@@ -1,0 +1,30 @@
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Content</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts">
+                <td>{{post.content}}</td>
+                <td>
+                    <button (click)="deletePost(post.id)">delete</button>
+                    <button (click)="editPost(post.id, post.content)">edit</button>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+<div *ngIf="editing" class="container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <label for="cont_i" name="cont_f">Content</label>
+        <br>
+        <textarea id="cont_i" type="text" formControlName="content" required></textarea>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+</div>
+    
+</div>
