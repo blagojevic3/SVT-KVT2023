@@ -1,4 +1,5 @@
-package com.example.ProjekatSVT.config;
+package com.example.ProjekatSVT.security;
+
 
 import com.example.ProjekatSVT.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,13 @@ public class WebSecurityConfig {
 //                .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
                 .antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/clubs/{id}/**").access("@webSecurity.checkClubId(authentication,request,#id)")
+                .antMatchers(HttpMethod.GET, "/api/users/all").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/users/password-change").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/groups/").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/groups/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/posts/").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/posts/").permitAll()
+
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
                 // koji tip korisnika moze da pristupi odgovarajucoj ruti. Npr. ukoliko zelimo da definisemo da ruti 'admin' moze da pristupi
                 // samo korisnik koji ima rolu 'ADMIN', navodimo na sledeci nacin:
@@ -83,6 +90,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and()
+
 
                 // umetni custom filter TokenAuthenticationFilter kako bi se vrsila provera JWT tokena umesto cistih korisnickog imena i lozinke (koje radi BasicAuthenticationFilter)
                 .addFilterBefore(new AuthenticationTokenFilter(userDetailsService(), tokenUtils), BasicAuthenticationFilter.class);

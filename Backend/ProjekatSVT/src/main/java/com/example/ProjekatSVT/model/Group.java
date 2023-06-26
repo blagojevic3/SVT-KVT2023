@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name="groups")
+@Table(name="social_groups")
 public class Group {
 
     @Id
@@ -39,19 +39,19 @@ public class Group {
 
     @Column(name = "suspendedReason")
     private String suspendedReason;
-
-    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
-    private Set<GroupAdmin> groupAdmins =new HashSet<GroupAdmin>();
-
-
-    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
-    private Set<Post> posts = new HashSet<Post>();   //contains
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-    private Set<Banned> bans = new HashSet<Banned>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-    private Set<GroupRequest> groupRequests = new HashSet<GroupRequest>();
+//
+//    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
+//    private Set<GroupAdmin> groupAdmins =new HashSet<GroupAdmin>();
+//
+//
+//    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
+//    private Set<Post> posts = new HashSet<Post>();   //contains
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+//    private Set<Banned> bans = new HashSet<Banned>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+//    private Set<GroupRequest> groupRequests = new HashSet<GroupRequest>();
 
 
 

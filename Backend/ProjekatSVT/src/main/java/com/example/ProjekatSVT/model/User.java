@@ -51,14 +51,14 @@ public class User  {
 
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Post> posts = new HashSet<Post>();
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<GroupAdmin> groupAdmins = new HashSet<GroupAdmin>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentFriend")
-    private Set<User> friends = new HashSet<User>();
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+//    private Set<Post> posts = new HashSet<Post>();
+//
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
+//    private Set<GroupAdmin> groupAdmins = new HashSet<GroupAdmin>();
+//
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parentFriend")
+//    private Set<User> friends = new HashSet<User>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
@@ -68,29 +68,29 @@ public class User  {
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Banned> bans = new HashSet<Banned>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Comment> comments = new HashSet<Comment>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "byUser")
-    private Set<FriendRequest> sentRequests = new HashSet<FriendRequest>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "forUser")
-    private Set<FriendRequest> receivedRequests = new HashSet<FriendRequest>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "byUser")
-    private Set<Report> sentReports = new HashSet<Report>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "forUser")
-    private Set<Report> receivedReports = new HashSet<Report>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<GroupRequest> groupRequests = new HashSet<GroupRequest>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Reaction> reactions = new HashSet<Reaction>();
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<Banned> bans = new HashSet<Banned>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<Comment> comments = new HashSet<Comment>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "byUser")
+//    private Set<FriendRequest> sentRequests = new HashSet<FriendRequest>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "forUser")
+//    private Set<FriendRequest> receivedRequests = new HashSet<FriendRequest>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "byUser")
+//    private Set<Report> sentReports = new HashSet<Report>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "forUser")
+//    private Set<Report> receivedReports = new HashSet<Report>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<GroupRequest> groupRequests = new HashSet<GroupRequest>();
+//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<Reaction> reactions = new HashSet<Reaction>();
 
 
 

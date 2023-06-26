@@ -3,12 +3,13 @@ package com.example.ProjekatSVT.controller;
 
 
 
-import com.example.ProjekatSVT.config.TokenUtils;
+
 import com.example.ProjekatSVT.dto.JwtAuthenticationRequest;
 import com.example.ProjekatSVT.dto.PasswordDTO;
 import com.example.ProjekatSVT.dto.UserDTO;
 import com.example.ProjekatSVT.dto.UserTokenState;
 import com.example.ProjekatSVT.model.User;
+import com.example.ProjekatSVT.security.TokenUtils;
 import com.example.ProjekatSVT.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

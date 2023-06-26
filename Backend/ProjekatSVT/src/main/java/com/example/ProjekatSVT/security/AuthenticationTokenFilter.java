@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.config;
+package com.example.ProjekatSVT.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

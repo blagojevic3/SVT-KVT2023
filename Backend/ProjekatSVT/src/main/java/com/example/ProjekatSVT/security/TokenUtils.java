@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.config;
+package com.example.ProjekatSVT.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,5 @@
-package com.example.ProjekatSVT.config;
+package com.example.ProjekatSVT.security;
+
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
