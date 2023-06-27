@@ -30,6 +30,6 @@ public class GroupAdmin{
     @JoinColumn(name="groupId")
     private Group group;         ///svoj id
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupAdmin")
-    private Set<Banned> bans = new HashSet<Banned>();
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupAdmin")
+//    private Set<Banned> bans = new HashSet<Banned>();
 }

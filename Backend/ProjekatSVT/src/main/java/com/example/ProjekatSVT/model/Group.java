@@ -3,6 +3,7 @@ package com.example.ProjekatSVT.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,8 +41,9 @@ public class Group {
     @Column(name = "suspendedReason")
     private String suspendedReason;
 //
-//    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
-//    private Set<GroupAdmin> groupAdmins =new HashSet<GroupAdmin>();
+    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<GroupAdmin> groupAdmins =new HashSet<GroupAdmin>();
 //
 //
 //    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
