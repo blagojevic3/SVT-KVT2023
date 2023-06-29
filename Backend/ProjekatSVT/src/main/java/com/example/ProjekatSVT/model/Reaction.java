@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -28,7 +29,7 @@ public class Reaction {
     private EReactionType type;
 
     @Column(name = "timestamp",nullable = false)
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
