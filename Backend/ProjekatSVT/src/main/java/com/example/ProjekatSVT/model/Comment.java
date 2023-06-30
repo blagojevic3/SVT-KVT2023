@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Comment {
     private String text;
 
     @Column(name = "timestamp", nullable = false)
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     @Column(name = "isDeleted", nullable = false)
     private Boolean isDeleted;

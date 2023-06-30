@@ -1,30 +1,46 @@
 <div class="container">
-    <table>
-        <thead>
-            <tr>
-                <th>Content</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let post of posts">
-                <td>{{post.content}}</td>
-                <td>
-                    <button (click)="deletePost(post.id)">delete</button>
-                    <button (click)="editPost(post.id, post.content)">edit</button>
-                </td>
-            </tr>
-            
-        </tbody>
-    </table>
-<div *ngIf="editing" class="container">
+  <div class="post" *ngFor="let post of posts">
+    <div class="post-header">
+      <button (click)="deletePost(post.id)">
+        <i class="fas fa-trash"></i> Delete
+      </button>
+      <button (click)="editPost(post.id, post.content)">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+    </div>
+    <div class="post-content">
+      <div>{{ post.content }}</div>
+    </div>
+    <div class="post-footer">
+      <div class="reactions">
+        <button (click)="likePost(post.id)">
+          <i class="far fa-thumbs-up"></i> Like
+        </button>
+        <span class="reaction-counter">{{ post.likes }}</span>
+        <button (click)="dislikePost(post.id)">
+          <i class="far fa-thumbs-down"></i> Dislike
+        </button>
+        <span class="reaction-counter">{{ post.dislikes }}</span>
+        <button (click)="heartPost(post.id)">
+          <i class="far fa-heart"></i> Heart
+        </button>
+        <span class="reaction-counter">{{ post.hearts }}</span>
+      </div>
+      <div class="comment">
+        <input [(ngModel)]="commentText" placeholder="Write a comment..." />
+        <button (click)="submitComment(post.id)">
+          <i class="fas fa-paper-plane"></i> Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="editing" class="container">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <label for="cont_i" name="cont_f">Content</label>
-        <br>
-        <textarea id="cont_i" type="text" formControlName="content" required></textarea>
-        <br>
-        <button type="submit">Save</button>
+      <label for="cont_i" name="cont_f">Content</label>
+      <br>
+      <textarea id="cont_i" type="text" formControlName="content" required></textarea>
+      <br>
+      <button type="submit">Save</button>
     </form>
-</div>
-    
+  </div>
 </div>

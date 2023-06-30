@@ -10,21 +10,18 @@ interface DisplayMessage {
   msgBody: string;
 }
 
-
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  @Input() posts: any[]
+  @Input() posts: any[];
   editing = false;
-  form: FormGroup
+  form: FormGroup;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   notification: DisplayMessage;
   returnUrl: string;
-
-
 
   constructor(
     private postService: PostService,
@@ -35,11 +32,13 @@ export class PostListComponent implements OnInit {
   ngOnInit() {}
 
   deletePost(postId: number) {
-    console.log(postId)
-    
-    this.postService.delete(postId).subscribe((posts) => {this.postService.getPosts()});
+    console.log(postId);
+    this.postService.delete(postId).subscribe((posts) => {
+      this.postService.getPosts();
+    });
   }
-  editPost(postId, postContent) {
+
+  editPost(postId: number, postContent: string) {
     this.editing = true;
     this.route.params
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -52,13 +51,31 @@ export class PostListComponent implements OnInit {
       id: postId,
       content: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
     });
-    this.form.get("content").setValue(postContent)
+    this.form.get('content').setValue(postContent);
   }
 
-  onSubmit(){
-    this.postService.edit(this.form.value).subscribe((result) => {
-    });
+  onSubmit() {
+    this.postService.edit(this.form.value).subscribe((result) => {});
   }
 
+  likePost(postId: number) {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      post.likes = post.likes ? post.likes + 1 : 1;
+    }
+  }
 
+  dislikePost(postId: number) {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      post.dislikes = post.dislikes ? post.dislikes + 1 : 1;
+    }
+  }
+
+  heartPost(postId: number) {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      post.hearts = post.hearts ? post.hearts + 1 : 1;
+    }
+  }
 }

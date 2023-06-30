@@ -5,6 +5,8 @@ import com.example.ProjekatSVT.dto.UserDTO;
 import com.example.ProjekatSVT.model.ERole;
 import com.example.ProjekatSVT.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.ProjekatSVT.repository.UserRepository;
@@ -31,7 +33,11 @@ public class UserService implements IUserService{
         }
         return null;
     }
-
+    @Override
+    public User returnLoggedUser() {
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        return this.findByUsername(a.getName());
+    }
     @Override
     public User findById(Integer id) {
         Optional<User> user = userRepository.findFirstById(id);
