@@ -6,6 +6,7 @@ import com.example.ProjekatSVT.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class PostController {
     IPostService postService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<PostDTO> create(@RequestBody @Validated PostDTO newPost){
 
         Post createdPost = postService.createPost(newPost);

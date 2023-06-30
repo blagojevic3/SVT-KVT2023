@@ -3,7 +3,9 @@ package com.example.ProjekatSVT.service;
 
 import com.example.ProjekatSVT.dto.PostDTO;
 import com.example.ProjekatSVT.model.Post;
+import com.example.ProjekatSVT.model.User;
 import com.example.ProjekatSVT.repository.PostRepository;
+import com.example.ProjekatSVT.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class PostService implements IPostService{
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private IUserService userService;
 
     @Override
     public Post findPostByContent(String content) {
@@ -39,9 +47,16 @@ public class PostService implements IPostService{
 
     @Override
     public Post createPost(PostDTO postDTO) {
+
+        User user = userService.findById(postDTO.getUserId());
         Post post = new Post();
+
+        post.setUser(user);
+        post.setId(postDTO.getId());
         post.setContent(postDTO.getContent());
         post.setCreationDate(LocalDateTime.now());
+
+
         post = postRepository.save(post);
         return post;
 

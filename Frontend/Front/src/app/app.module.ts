@@ -32,6 +32,8 @@ import { AddGroupComponent } from './groups/add-group/add-group.component';
 import { AddPostComponent } from './posts/add-post/add-post.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostListContentComponent } from './posts/post-list-content/post-list-content.component';
+import { ProfilePageComponent } from './profile/profile-page/profile-page.component';
+import { AboutPageComponent } from './profile/about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { PostListContentComponent } from './posts/post-list-content/post-list-co
     AddPostComponent,
     PostListComponent,
     PostListContentComponent,
+    ProfilePageComponent,
+    AboutPageComponent,
   ],
   imports: [
     BrowserModule,

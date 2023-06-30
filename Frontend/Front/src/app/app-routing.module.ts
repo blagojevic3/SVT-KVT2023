@@ -9,6 +9,8 @@ import { GroupListContentComponent } from './groups/group-list-content/group-lis
 import { AddGroupComponent } from './groups/add-group/add-group.component';
 import { PostListContentComponent } from './posts/post-list-content/post-list-content.component';
 import { AddPostComponent } from './posts/add-post/add-post.component';
+import { ProfilePageComponent } from './profile/profile-page/profile-page.component';
+import { AboutPageComponent } from './profile/about-page/about-page.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,14 @@ const routes: Routes = [
   {
     path: 'posts/create',
     component: AddPostComponent
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent
+  },
+  {
+    path: 'profile/about',
+    component: AboutPageComponent
   }
 ];
 

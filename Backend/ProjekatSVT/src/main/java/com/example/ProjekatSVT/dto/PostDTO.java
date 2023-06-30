@@ -15,12 +15,12 @@ public class PostDTO {
     @NotBlank
     private String content;
     private String creationDate;
-    private String username;
+    private Integer userId;
 
     public PostDTO(Post post){
         this.id = post.getId();
         this.content = post.getContent();
         this.creationDate = post.getCreationDate().toString();
-        this.username = post.getUser().getUsername();
+        this.userId = post.getUser().getId();
     }
 }

@@ -33,6 +33,17 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public User findById(Integer id) {
+        Optional<User> user = userRepository.findFirstById(id);
+        if (!user.isEmpty()) {
+            return user.get();
+        }
+        return null;
+    }
+
+
+
+    @Override
     public User createUser(UserDTO userDTO) {
 
         Optional<User> user = userRepository.findFirstByUsername(userDTO.getUsername());
