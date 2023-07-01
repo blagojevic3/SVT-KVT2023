@@ -2,6 +2,7 @@ package com.example.ProjekatSVT.controller;
 
 import com.example.ProjekatSVT.dto.CommentDTO;
 import com.example.ProjekatSVT.model.Comment;
+import com.example.ProjekatSVT.model.Post;
 import com.example.ProjekatSVT.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -74,6 +76,11 @@ public class CommentController {
     public Set<Comment> commentReplies(@PathVariable Integer commentId) {
         return commentService.getAllCommentReplies(commentId);
     }
+
+    @GetMapping("/{postId}/all")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public Set<Comment> loadAll(@PathVariable Integer postId){
+        return this.commentService.getAllPostComments(postId);}
 
 }
 

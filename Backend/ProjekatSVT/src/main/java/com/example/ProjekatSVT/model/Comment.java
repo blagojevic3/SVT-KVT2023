@@ -3,6 +3,7 @@ package com.example.ProjekatSVT.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +34,7 @@ public class Comment {
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
 
-    @Column(name = "isDeleted", nullable = false)
+    @Column(name = "isDeleted")
     private Boolean isDeleted;
 
 
@@ -47,16 +48,16 @@ public class Comment {
     private Post post;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentComment")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parentComment")
     private Set<Comment> comments = new HashSet<Comment>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "comment_id")
     private Comment parentComment;
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
     private Set<Reaction> reactions = new HashSet<Reaction>();
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
     private Set<Report> reports = new HashSet<Report>();
 }

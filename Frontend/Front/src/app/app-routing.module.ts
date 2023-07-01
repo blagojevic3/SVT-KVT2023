@@ -12,6 +12,8 @@ import { AddPostComponent } from './posts/add-post/add-post.component';
 import { ProfilePageComponent } from './profile/profile-page/profile-page.component';
 import { AboutPageComponent } from './profile/about-page/about-page.component';
 
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -53,6 +55,10 @@ const routes: Routes = [
   {
     path: 'profile/about',
     component: AboutPageComponent
+  },
+  {
+    path: 'profile/edit',
+    component: EditProfileComponent
   }
 ];
 

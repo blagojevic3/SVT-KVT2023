@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
-public class CommentService extends ICommentService{
+public class CommentService implements ICommentService{
 
     @Autowired
     private CommentRepository commentRepository;

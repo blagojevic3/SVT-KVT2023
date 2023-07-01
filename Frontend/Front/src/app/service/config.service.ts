@@ -51,4 +51,10 @@ export class ConfigService {
     return this._signup_url;
   }
 
+  private _comments_url = this._api_url + '/comments';
+
+  get comments_url(): string {
+    return this._comments_url;
+  }
+
 }

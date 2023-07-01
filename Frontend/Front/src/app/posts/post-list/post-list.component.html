@@ -1,5 +1,6 @@
 <div class="container">
   <div class="post" *ngFor="let post of posts">
+    <!-- Post header -->
     <div class="post-header">
       <button (click)="deletePost(post.id)">
         <i class="fas fa-trash"></i> Delete
@@ -8,9 +9,26 @@
         <i class="fas fa-edit"></i> Edit
       </button>
     </div>
+
+    <!-- Post content -->
     <div class="post-content">
       <div>{{ post.content }}</div>
     </div>
+    
+    <!-- Comment section -->
+    <div class="post-comments">
+      <div class="comment" *ngFor="let comment of post.comments">
+        <div>{{ comment.text }}</div>
+      </div>
+      <div class="comment-input">
+        <input [(ngModel)]="post.commentText" placeholder="Write a comment..." />
+        <button (click)="submitComment(post.id, post.commentText)">
+          <i class="fas fa-paper-plane"></i> Submit
+        </button>
+      </div>
+    </div>
+
+    <!-- Post actions -->
     <div class="post-footer">
       <div class="reactions">
         <button (click)="likePost(post.id)">
@@ -26,21 +44,6 @@
         </button>
         <span class="reaction-counter">{{ post.hearts }}</span>
       </div>
-      <div class="comment">
-        <input [(ngModel)]="commentText" placeholder="Write a comment..." />
-        <button (click)="submitComment(post.id)">
-          <i class="fas fa-paper-plane"></i> Submit
-        </button>
-      </div>
     </div>
-  </div>
-  <div *ngIf="editing" class="container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <label for="cont_i" name="cont_f">Content</label>
-      <br>
-      <textarea id="cont_i" type="text" formControlName="content" required></textarea>
-      <br>
-      <button type="submit">Save</button>
-    </form>
   </div>
 </div>

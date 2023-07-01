@@ -34,6 +34,8 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostListContentComponent } from './posts/post-list-content/post-list-content.component';
 import { ProfilePageComponent } from './profile/profile-page/profile-page.component';
 import { AboutPageComponent } from './profile/about-page/about-page.component';
+import { CommentService } from './service/comment.service';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { AboutPageComponent } from './profile/about-page/about-page.component';
     PostListContentComponent,
     ProfilePageComponent,
     AboutPageComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { AboutPageComponent } from './profile/about-page/about-page.component';
     ApiService,
     UserService,
     ConfigService,
-    PostService
+    PostService,
+    CommentService
   ],
   bootstrap: [AppComponent]
 })

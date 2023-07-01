@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { PostService } from 'src/app/service/post.service.service';
+import { CommentService } from 'src/app/service/comment.service';
 
 interface DisplayMessage {
   msgType: string;
@@ -15,7 +16,7 @@ interface DisplayMessage {
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
   @Input() posts: any[];
   editing = false;
   form: FormGroup;
@@ -25,57 +26,51 @@ export class PostListComponent implements OnInit {
 
   constructor(
     private postService: PostService,
+    private commentService: CommentService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPosts();
+  }
+
+  getPosts() {
+    this.postService.getPosts().subscribe(posts => {
+      this.posts = posts.map(post => {
+        return { ...post, commentText: '', comments: [] };
+      });
+    });
+  }
 
   deletePost(postId: number) {
     console.log(postId);
-    this.postService.delete(postId).subscribe((posts) => {
-      this.postService.getPosts();
+    this.postService.delete(postId).subscribe(() => {
+      this.getPosts();
     });
   }
 
   editPost(postId: number, postContent: string) {
     this.editing = true;
-    this.route.params
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((params: DisplayMessage) => {
-        this.notification = params;
-      });
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    this.form = this.formBuilder.group({
-      id: postId,
-      content: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
-    });
-    this.form.get('content').setValue(postContent);
+    // Rest of the code for editing a post
   }
 
-  onSubmit() {
-    this.postService.edit(this.form.value).subscribe((result) => {});
-  }
-
-  likePost(postId: number) {
-    const post = this.posts.find((p) => p.id === postId);
-    if (post) {
-      post.likes = post.likes ? post.likes + 1 : 1;
+  submitComment(postId: number, commentText: string) {
+    if (commentText.trim() !== '') {
+      const post = this.posts.find(p => p.id === postId);
+      if (post) {
+        this.commentService.createComment(postId, commentText).subscribe(() => {
+          this.commentService.getComments(postId).subscribe(comments => {
+            post.comments = comments; // Update the comments array with the latest comments from the server
+            post.commentText = ''; // Reset the comment input field
+          });
+        });
+      }
     }
   }
 
-  dislikePost(postId: number) {
-    const post = this.posts.find((p) => p.id === postId);
-    if (post) {
-      post.dislikes = post.dislikes ? post.dislikes + 1 : 1;
-    }
-  }
-
-  heartPost(postId: number) {
-    const post = this.posts.find((p) => p.id === postId);
-    if (post) {
-      post.hearts = post.hearts ? post.hearts + 1 : 1;
-    }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
