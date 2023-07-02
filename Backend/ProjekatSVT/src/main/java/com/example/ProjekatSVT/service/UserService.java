@@ -38,6 +38,22 @@ public class UserService implements IUserService{
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         return this.findByUsername(a.getName());
     }
+
+
+    @Override
+    public User edit(UserDTO userDTO) {
+        User user = this.returnLoggedUser();
+
+        user.setUsername(user.getUsername());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+
+        // Save the updated user
+        user = this.save(user);
+
+        return user;
+    }
     @Override
     public User findById(Integer id) {
         Optional<User> user = userRepository.findFirstById(id);
@@ -76,7 +92,8 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void save(User user){
+    public User save(User user){
         userRepository.save(user);
+        return user;
     }
 }

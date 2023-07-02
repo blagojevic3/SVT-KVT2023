@@ -127,6 +127,33 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
 
     }
+//    @PutMapping("/edit")
+//    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+//    public ResponseEntity<UserDTO> edit(@RequestBody UserDTO editUserDTO) {
+//        User user = userService.edit(editUserDTO);
+//
+//        if (user == null) {
+//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//        }
+//
+//        UserDTO userDTO = new UserDTO(user);
+//
+//        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+//    }
+
+    @PutMapping("/edit")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<UserDTO> edit(@RequestBody UserDTO editUserDTO) {
+        User user = userService.edit(editUserDTO);
+
+        if (user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        UserDTO userDTO = new UserDTO(user);
+
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
 
 }
 

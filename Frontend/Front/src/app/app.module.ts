@@ -37,6 +37,7 @@ import { AboutPageComponent } from './profile/about-page/about-page.component';
 import { CommentService } from './service/comment.service';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -52,20 +52,17 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   editPost(postId: number, postContent: string) {
     this.editing = true;
-    // Rest of the code for editing a post
+   
   }
 
-  submitComment(postId: number, commentText: string) {
-    if (commentText.trim() !== '') {
-      const post = this.posts.find(p => p.id === postId);
-      if (post) {
-        this.commentService.createComment(postId, commentText).subscribe(() => {
-          this.commentService.getComments(postId).subscribe(comments => {
-            post.comments = comments; // Update the comments array with the latest comments from the server
-            post.commentText = ''; // Reset the comment input field
-          });
+  submitComment(post: any) {
+    if (post.commentText.trim() !== '') {
+      this.commentService.createComment(post.id, post.commentText).subscribe(() => {
+        this.commentService.getComments(post.id).subscribe(comments => {
+          post.comments = comments; 
+          post.commentText = ''; 
         });
-      }
+      });
     }
   }
 

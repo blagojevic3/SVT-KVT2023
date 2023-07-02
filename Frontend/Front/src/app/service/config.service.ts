@@ -8,6 +8,10 @@ export class ConfigService {
   private _api_url = 'http://localhost:8080/api';
   private _user_url = this._api_url + '/users';
 
+  get user_url():string{
+      return this._user_url;
+  }
+
   private _login_url = this._user_url + '/login';
 
   get login_url(): string {

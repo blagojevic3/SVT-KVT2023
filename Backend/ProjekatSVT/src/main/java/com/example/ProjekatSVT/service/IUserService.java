@@ -10,9 +10,11 @@ public interface IUserService {
 
     User returnLoggedUser();
 
+    User edit(UserDTO userDTO);
+
     User findById(Integer id);
 
     User createUser(UserDTO userDTO);
     List<User> findAll();
-    void save(User user);
+    User save(User user);
 }

@@ -22,7 +22,7 @@
       </div>
       <div class="comment-input">
         <input [(ngModel)]="post.commentText" placeholder="Write a comment..." />
-        <button (click)="submitComment(post.id, post.commentText)">
+        <button (click)="submitComment(post)">
           <i class="fas fa-paper-plane"></i> Submit
         </button>
       </div>
