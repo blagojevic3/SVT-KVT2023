@@ -27,13 +27,14 @@ export class GroupService {
   }
 
 
-  delete(groupId){
-    return this.apiService.delete(this.config.group_url+ "/?id=" + groupId)
-    .pipe(map(() => {
-      console.log("Delete success");
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/groups']);}); 
-    }))
+  delete(groupId) {
+    return this.apiService.delete(this.config.group_url + "/" + groupId)
+      .pipe(map(() => {
+        console.log("Delete success");
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/groups']);
+        });
+      }));
   }
   add(group){
     return this.apiService.post(this.config.group_url + "/create", JSON.stringify(group))

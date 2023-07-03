@@ -4,6 +4,8 @@ package com.example.ProjekatSVT.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "groupAdmins")
+@Table(name = "group_admins")
 public class GroupAdmin{
 
     @Id
@@ -27,7 +29,8 @@ public class GroupAdmin{
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="groupId")
+    @JoinColumn(name="group_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Group group;         ///svoj id
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupAdmin")

@@ -41,13 +41,14 @@ public class Group {
     @Column(name = "suspendedReason")
     private String suspendedReason;
 //
-    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<GroupAdmin> groupAdmins =new HashSet<GroupAdmin>();
-//
-//
-//    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY)
-//    private Set<Post> posts = new HashSet<Post>();   //contains
+
+
+    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Post> posts = new HashSet<Post>();   //contains
 //
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
 //    private Set<Banned> bans = new HashSet<Banned>();

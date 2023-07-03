@@ -49,9 +49,9 @@ public class Post {
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 //    private Set<Image> imageList = new HashSet<Image>();
 //
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "groupId")
-//    private Group group;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupId")
+    private Group group;
 
 
 

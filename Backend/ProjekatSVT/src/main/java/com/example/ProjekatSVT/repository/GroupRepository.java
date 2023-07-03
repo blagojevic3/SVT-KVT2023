@@ -10,4 +10,5 @@ import java.util.Optional;
 @RestController
 public interface GroupRepository extends JpaRepository<Group,Integer> {
     Optional<Group> findFirstByName(String name);
+
 }
