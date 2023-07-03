@@ -34,5 +34,9 @@ export class UserService {
     return this.http.put<any>(`${this.config.user_url}/edit`, user);
   }
 
+  getCurrentUser() {
+    return this.currentUser;
+  }
+
 
 }

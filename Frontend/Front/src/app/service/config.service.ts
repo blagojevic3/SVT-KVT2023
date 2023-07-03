@@ -61,4 +61,10 @@ export class ConfigService {
     return this._comments_url;
   }
 
+  private _reactions_url = this._api_url+'/reactions';
+
+  get reactions_url(): string {
+    return this._reactions_url;
+  }
+
 }

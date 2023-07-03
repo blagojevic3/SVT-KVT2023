@@ -17,13 +17,13 @@ public class ReactionDTO {
     private String reactionType;
     @NotBlank
     private LocalDateTime timeStamp;
-    private String username;
+    private Integer userId;
 
 
     public ReactionDTO(Reaction reaction) {
         this.id = reaction.getId();
         this.reactionType = reaction.getType().toString();
         this.timeStamp = reaction.getTimestamp();
-        this.username = reaction.getUser().getUsername();
+        this.userId = reaction.getUser().getId();
     }
 }
