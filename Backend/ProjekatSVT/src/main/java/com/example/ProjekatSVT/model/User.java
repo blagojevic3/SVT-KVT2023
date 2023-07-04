@@ -50,6 +50,9 @@ public class User  {
     @Enumerated(EnumType.STRING)
     private ERole role;
 
+    @Column(name = "description")
+    private String description;
+
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

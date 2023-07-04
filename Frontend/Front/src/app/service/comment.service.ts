@@ -21,8 +21,6 @@ export class CommentService {
     return this.apiService.delete(`${this.config.comments_url}/${commentId}`);
   }
 
-
-
   editComment(commentId: number, editedComment: any) {
     return this.apiService.put(`${this.config.comments_url}/${commentId}`, JSON.stringify(editedComment));
   }

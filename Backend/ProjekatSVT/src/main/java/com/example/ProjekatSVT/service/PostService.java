@@ -2,7 +2,9 @@ package com.example.ProjekatSVT.service;
 
 
 import com.example.ProjekatSVT.dto.PostDTO;
+import com.example.ProjekatSVT.model.Comment;
 import com.example.ProjekatSVT.model.Post;
+import com.example.ProjekatSVT.model.Reaction;
 import com.example.ProjekatSVT.model.User;
 import com.example.ProjekatSVT.repository.PostRepository;
 import com.example.ProjekatSVT.repository.UserRepository;
@@ -73,6 +75,21 @@ public class PostService implements IPostService{
 
     @Override
     public void delete(Integer id) {
-        this.postRepository.deleteById(id);
+        Post post = findPostById(id);
+        if (post != null) {
+            // Delete comments associated with the post
+            for (Comment comment : post.getCommentList()) {
+                comment.setPost(null); // Remove association with the post
+            }
+            post.getCommentList().clear(); // Clear the comment list
+
+            // Delete reactions associated with the post
+            for (Reaction reaction : post.getReactionList()) {
+                reaction.setPost(null); // Remove association with the post
+            }
+            post.getReactionList().clear(); // Clear the reaction list
+
+            postRepository.deleteById(id); // Delete the post
+        }
     }
 }

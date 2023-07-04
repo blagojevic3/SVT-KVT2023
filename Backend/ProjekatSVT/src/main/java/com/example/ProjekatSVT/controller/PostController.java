@@ -38,8 +38,11 @@ public class PostController {
         return new ResponseEntity<>(postDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping()
-    public void delete(@RequestParam Integer id){postService.delete(id);}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        postService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/all")
     public List<Post> loadAll(){return this.postService.findAll();}

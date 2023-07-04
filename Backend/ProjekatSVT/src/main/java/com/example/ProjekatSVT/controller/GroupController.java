@@ -47,5 +47,23 @@ public class GroupController {
     @GetMapping("/all")
     public List<Group> loadAll(){return this.groupService.findAll();}
 
+    @PutMapping("/edit")
+    public ResponseEntity<GroupDTO> edit(@RequestBody @Validated GroupDTO editedGroup) {
+        Group existingGroup = groupService.findGroupById(editedGroup.getId());
+
+        if (existingGroup == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        // Update the existing group
+        existingGroup.setName(editedGroup.getName());
+        existingGroup.setDescription(editedGroup.getDescription());
+
+        groupService.save(existingGroup);
+
+        GroupDTO groupDTO = new GroupDTO(existingGroup);
+        return new ResponseEntity<>(groupDTO, HttpStatus.OK);
+    }
+
 
 }

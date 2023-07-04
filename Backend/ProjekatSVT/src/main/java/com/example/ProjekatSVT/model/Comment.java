@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -54,9 +56,12 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "comment_id")
     private Comment parentComment;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Reaction> reactions = new HashSet<Reaction>();
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
     private Set<Report> reports = new HashSet<Report>();

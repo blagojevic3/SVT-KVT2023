@@ -21,12 +21,10 @@ export class PostService {
   }
 
   delete(postId): Observable<void> {
-    return this.apiService.delete(`${this.config.post_url}/?id=${postId}`)
+    return this.apiService.delete(`${this.config.post_url}/${postId}`)
       .pipe(map(() => {
         console.log("Delete success");
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/posts']);
-        });
+        this.getPosts().subscribe(); // Refresh the posts after deleting
       }));
   }
 
@@ -38,9 +36,7 @@ export class PostService {
     return this.apiService.put(`${this.config.post_url}/edit`, JSON.stringify(post))
       .pipe(map(() => {
         console.log("Edit success");
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/posts']);
-        });
+        this.getPosts().subscribe(); // Refresh the posts after editing
       }));
   }
 }

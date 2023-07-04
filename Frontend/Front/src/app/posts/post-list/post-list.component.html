@@ -10,8 +10,16 @@
       </button>
     </div>
 
+    <!-- Edit form -->
+    <div *ngIf="editing && form.controls.id.value === post.id">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <textarea formControlName="content" rows="3"></textarea>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+
     <!-- Post content -->
-    <div class="post-content">
+    <div class="post-content" *ngIf="!editing || form.controls.id.value !== post.id">
       <div>{{ post.content }}</div>
     </div>
     

@@ -32,13 +32,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private reactionService:ReactionService,
-    private userService:UserService,
+    private reactionService: ReactionService,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
     this.getPosts();
-    this.currentUser = this.userService.getCurrentUser(); 
+    this.currentUser = this.userService.getCurrentUser();
   }
 
   getPosts() {
@@ -47,11 +47,18 @@ export class PostListComponent implements OnInit, OnDestroy {
         return {
           ...post,
           commentText: '',
-          comments: [],
-          likes: post.likes || 0,        // Initialize likes to 0 if undefined
-          dislikes: post.dislikes || 0,  // Initialize dislikes to 0 if undefined
-          hearts: post.hearts || 0       // Initialize hearts to 0 if undefined
+          comments: [], // Initialize comments to an empty array
+          likes: post.likes || 0,
+          dislikes: post.dislikes || 0,
+          hearts: post.hearts || 0
         };
+      });
+  
+      // Retrieve comments for each post
+      this.posts.forEach(post => {
+        this.commentService.getComments(post.id).subscribe(comments => {
+          post.comments = comments;
+        });
       });
     });
   }
@@ -63,18 +70,27 @@ export class PostListComponent implements OnInit, OnDestroy {
     });
   }
 
-  editPost(postId: number, postContent: string) {
+  editPost(postId, postContent) {
     this.editing = true;
-   
+    this.route.params
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((params: DisplayMessage) => {
+        this.notification = params;
+      });
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.form = this.formBuilder.group({
+      id: postId,
+      content: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
+    });
+    this.form.get("content").setValue(postContent);
   }
 
   submitComment(post: any) {
     if (post.commentText.trim() !== '') {
-      this.commentService.createComment(post.id, post.commentText).subscribe(() => {
-        this.commentService.getComments(post.id).subscribe(comments => {
-          post.comments = comments; 
-          post.commentText = ''; 
-        });
+      this.commentService.createComment(post.id, post.commentText).subscribe(comment => {
+        post.comments.push(comment);
+        post.commentText = '';
       });
     }
   }
@@ -108,6 +124,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
   unreact(reactionId: number) {
     this.reactionService.unreact(reactionId).subscribe(() => {
       // Handle success or update the UI if needed
@@ -118,5 +135,9 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-}
 
+  onSubmit() {
+    this.postService.edit(this.form.value).subscribe((result) => {
+    });
+  }
+}

@@ -33,14 +33,17 @@ public class CommentService implements ICommentService{
         comment.setTimestamp(LocalDateTime.now());
         comment.setUser(user);
         comment.setPost(post);
-        comment.setParentComment(null);
 
-        if(commentId != null) {
+        if (commentId != null) {
             Comment parentComment = this.findOne(commentId);
             comment.setParentComment(parentComment);
         }
 
         comment = commentRepository.save(comment);
+
+        // Update the post's comments set
+        post.getCommentList().add(comment);
+        postService.save(post);
 
         return comment;
     }

@@ -23,6 +23,8 @@ public class UserDTO {
     private String firstName;
     @NotBlank
     private String lastName;
+    @NotBlank
+    private String description;
 
     public UserDTO(User createdUser) {
         this.id = createdUser.getId();
@@ -30,6 +32,7 @@ public class UserDTO {
         this.firstName = createdUser.getFirstName();
         this.lastName = createdUser.getLastName();
         this.email = createdUser.getEmail();
+        this. description = createdUser.getDescription();
     }
 
 

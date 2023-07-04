@@ -50,6 +50,11 @@
                 <label class="small mb-1" for="inputEmailAddress">Email address</label>
                 <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" [(ngModel)]="user.email" name="email" required>
               </div>
+
+              <div class="mb-3">
+                <label class="small mb-1" for="description">Description</label>
+                <input class="form-control" id="description" type="text" placeholder="Write description" [(ngModel)]="user.description" name="description" required>
+              </div>
   
               <!-- Save changes button -->
               <button class="btn btn-primary" type="submit">Save changes</button>
