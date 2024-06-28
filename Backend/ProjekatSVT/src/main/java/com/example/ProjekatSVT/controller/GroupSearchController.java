@@ -1,7 +1,7 @@
 package com.example.ProjekatSVT.controller;
 
-import com.example.ProjekatSVT.dto.searchdto.SearchQueryDTO;
-import com.example.ProjekatSVT.model.searchmodel.GroupIndex;
+import com.example.ProjekatSVT.searchdto.SearchQueryDTO;
+import com.example.ProjekatSVT.searchmodel.GroupIndex;
 import com.example.ProjekatSVT.service.impl.GroupSearchServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

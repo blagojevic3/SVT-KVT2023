@@ -18,7 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name="social_groups")
+@Table(name="groups")
 public class Group {
 
     @Id
@@ -49,6 +49,8 @@ public class Group {
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Post> posts = new HashSet<Post>();   //contains
+
+
 //
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
 //    private Set<Banned> bans = new HashSet<Banned>();

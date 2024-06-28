@@ -3,7 +3,7 @@ package com.example.ProjekatSVT.service.impl;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.example.ProjekatSVT.exceptionhandling.exception.MalformedQueryException;
-import com.example.ProjekatSVT.model.searchmodel.DummyIndex;
+import com.example.ProjekatSVT.searchmodel.DummyIndex;
 import com.example.ProjekatSVT.service.interfaces.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.common.unit.Fuzziness;

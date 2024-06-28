@@ -1,8 +1,7 @@
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
-    container_name: socialnetwork-elasticsearch
+    container_name: svt-elasticsearch
     environment:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms1g -Xmx1g
@@ -10,47 +9,29 @@ services:
     ports:
       - "9200:9200"
     networks:
-      - socialnetwork-network
-
+      - svt-network
     command: >
-      bash -c '
-      if ! elasticsearch-plugin list | grep -q "analysis-icu"; then
-        elasticsearch-plugin install analysis-icu;
+      sh -c '
+      if ! bin/elasticsearch-plugin list | grep -q "analysis-icu"; then
+        bin/elasticsearch-plugin install analysis-icu --batch;
       fi;
-      exec elasticsearch'
-#    command: >
-#      bash -c '
-#      if ! elasticsearch-plugin list | grep -q "analysis-icu"; then
-#        elasticsearch-plugin install analysis-icu
-#      else
-#        tail -f /dev/null &
-#      fi'
+      exec bin/elasticsearch
+      '
     restart: always
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.4.3
-    container_name: socialnetwork-logstash
-    ports:
-      - "5044:5044"
-    volumes:
-      - "./logstash-ingest-data/:/usr/share/logstash/ingest_data/"
-      - "./logstash-config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
-    restart: always
-    networks:
-      - socialnetwork-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.4.3
-    container_name: socialnetwork-kibana
+    container_name: svt-kibana
     ports:
       - "5601:5601"
     networks:
-      - socialnetwork-network
+      - svt-network
     restart: always
 
   minio:
     image: quay.io/minio/minio
-    container_name: socialnetwork-minio
+    container_name: svt-minio
     ports:
       - 9000:9000
       - 9090:9090
@@ -62,11 +43,11 @@ services:
       - minio-data:/data
     restart: always
     networks:
-      - socialnetwork-network
+      - svt-network
 
 networks:
-  socialnetwork-network:
-    name: socialnetwork-network
+  svt-network:
+    name: svt-network
 
 volumes:
   minio-data:

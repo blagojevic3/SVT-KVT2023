@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.model.searchmodel;
+package com.example.ProjekatSVT.searchmodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,10 +16,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Document(indexName = "groups")
 @Setting(settingPath = "/configuration/serbian-analyzer-config.json")
-public class GroupIndex {
+public class    GroupIndex {
 
     @Id
-
     private Long id;
 
     @Field(type = FieldType.Text, store = true, name = "name", analyzer = "serbian_simple", searchAnalyzer = "serbian_simple")

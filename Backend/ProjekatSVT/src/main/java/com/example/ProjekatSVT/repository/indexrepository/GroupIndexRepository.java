@@ -1,7 +1,7 @@
 package com.example.ProjekatSVT.repository.indexrepository;
 
 
-import com.example.ProjekatSVT.model.searchmodel.GroupIndex;
+import com.example.ProjekatSVT.searchmodel.GroupIndex;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

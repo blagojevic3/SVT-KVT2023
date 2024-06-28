@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.dto.searchdto;
+package com.example.ProjekatSVT.searchdto;
 
 public record DummyDocumentFileResponseDTO(String serverFilename) {
 }

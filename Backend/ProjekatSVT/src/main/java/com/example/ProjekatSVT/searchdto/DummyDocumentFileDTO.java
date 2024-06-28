@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.dto.searchdto;
+package com.example.ProjekatSVT.searchdto;
 
 import org.springframework.web.multipart.MultipartFile;
 

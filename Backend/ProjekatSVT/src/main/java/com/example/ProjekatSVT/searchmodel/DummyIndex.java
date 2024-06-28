@@ -1,4 +1,4 @@
-package com.example.ProjekatSVT.model.searchmodel;
+package com.example.ProjekatSVT.searchmodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

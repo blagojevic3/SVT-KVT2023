@@ -4,7 +4,7 @@ package com.example.ProjekatSVT.service.impl;
 import com.example.ProjekatSVT.exceptionhandling.exception.LoadingException;
 import com.example.ProjekatSVT.exceptionhandling.exception.StorageException;
 import com.example.ProjekatSVT.model.DummyTable;
-import com.example.ProjekatSVT.model.searchmodel.DummyIndex;
+import com.example.ProjekatSVT.searchmodel.DummyIndex;
 import com.example.ProjekatSVT.repository.DummyRepository;
 import com.example.ProjekatSVT.repository.indexrepository.DummyIndexRepository;
 import com.example.ProjekatSVT.service.interfaces.FileService;

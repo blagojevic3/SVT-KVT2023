@@ -7,6 +7,9 @@ import com.example.ProjekatSVT.model.User;
 import com.example.ProjekatSVT.repository.GroupAdminRepository;
 import com.example.ProjekatSVT.repository.GroupRepository;
 import com.example.ProjekatSVT.repository.UserRepository;
+import com.example.ProjekatSVT.repository.indexrepository.GroupIndexRepository;
+import com.example.ProjekatSVT.searchmodel.GroupIndex;
+import com.example.ProjekatSVT.service.interfaces.SearchGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -23,9 +26,12 @@ public class GroupService implements IGroupService{
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
+    private GroupIndexRepository groupIndexRepository;
+    @Autowired
     private UserService userService;
     @Autowired
     private GroupAdminRepository groupAdminRepository;
+
 
 
     public Group findGroupById(Integer id){
@@ -46,12 +52,51 @@ public class GroupService implements IGroupService{
         return null;
     }
 
-    @Override
-    public Group createGroup(GroupDTO groupDTO) {
-        Optional<Group> group = groupRepository.findFirstByName(groupDTO.getName());
+//    @Override
+//    public Group createGroup(GroupDTO groupDTO) {
+//        Optional<Group> group = groupRepository.findFirstByName(groupDTO.getName());
+//
+//        if (group.isPresent()) {
+//            return null;
+//        }
+//        GroupIndex index = new GroupIndex();
+//
+//
+//        // Create the Group entity
+//        Group newGroup = new Group();
+//        newGroup.setName(groupDTO.getName());
+//        newGroup.setDescription(groupDTO.getDescription());
+//        newGroup.setCreationDate(LocalDateTime.now());
+//        newGroup.setIsSuspended(false);
+//
+//        // Get the user who is creating the group
+//        User creator = userService.returnLoggedUser();
+//        if (creator != null) {
+//            // Create the GroupAdmin entity
+//            GroupAdmin groupAdmin = new GroupAdmin();
+//            groupAdmin.setUser(creator);
+//            groupAdmin.setGroup(newGroup);
+//
+//            // Add the GroupAdmin to the Group's groupAdmins set
+//            newGroup.getGroupAdmins().add(groupAdmin);
+//        } else {
+//            // Handle the case when the creator user is not found
+//            // You can choose to throw an exception or handle it differently
+//        }
+//
+//        // Save the Group entity along with the GroupAdmin entity
+//        newGroup = groupRepository.save(newGroup);
+//
+//        return newGroup;
+//    }
 
-        if (group.isPresent()) {
-            return null;
+    @Override
+    @Transactional
+    public Group createGroup(GroupDTO groupDTO) {
+        Optional<Group> existingGroup = groupRepository.findFirstByName(groupDTO.getName());
+
+        if (existingGroup.isPresent()) {
+            return null; // or throw an exception indicating the group already exists
         }
 
         // Create the Group entity
@@ -76,8 +121,17 @@ public class GroupService implements IGroupService{
             // You can choose to throw an exception or handle it differently
         }
 
-        // Save the Group entity along with the GroupAdmin entity
+        // Save the Group entity in your relational database
         newGroup = groupRepository.save(newGroup);
+
+        // Create and save the corresponding GroupIndex in Elasticsearch
+        GroupIndex groupIndex = new GroupIndex();
+        groupIndex.setId(newGroup.getId().longValue()); // Assuming Group.id is Long in GroupIndex
+        groupIndex.setName(newGroup.getName());
+        groupIndex.setDescription(newGroup.getDescription());
+        groupIndex.setCreationDate(newGroup.getCreationDate().toLocalDate());
+
+        groupIndexRepository.save(groupIndex);
 
         return newGroup;
     }

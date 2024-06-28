@@ -3,7 +3,7 @@ package com.example.ProjekatSVT.service.impl;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.example.ProjekatSVT.exceptionhandling.exception.MalformedQueryException;
-import com.example.ProjekatSVT.model.searchmodel.GroupIndex;
+import com.example.ProjekatSVT.searchmodel.GroupIndex;
 import com.example.ProjekatSVT.service.interfaces.SearchGroupService;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.common.unit.Fuzziness;
@@ -49,14 +49,18 @@ public class GroupSearchServiceImpl implements SearchGroupService {
     }
 
     private Query buildSimpleSearchQuery(List<String> tokens) {
-        return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
+        BoolQuery boolQuery = BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             tokens.forEach(token -> {
                 b.should(sb -> sb.match(
                         m -> m.field("name").fuzziness(Fuzziness.ONE.asString()).query(token)));
                 b.should(sb -> sb.match(m -> m.field("description").query(token)));
             });
             return b;
-        })))._toQuery();
+        })));
+
+        System.out.println("Generated Query: " + boolQuery.toString()); // Log the query
+
+        return boolQuery._toQuery();
     }
 
     private Query buildAdvancedSearchQuery(List<String> operands, String operation) {

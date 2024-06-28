@@ -1,6 +1,6 @@
 package com.example.ProjekatSVT.service.interfaces;
 
-import com.example.ProjekatSVT.model.searchmodel.DummyIndex;
+import com.example.ProjekatSVT.searchmodel.DummyIndex;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
