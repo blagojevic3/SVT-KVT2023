@@ -26,6 +26,11 @@ public class Post {
 
     private Integer id;
 
+
+    @Column
+    private String title;
+
+
     @Column(name="content", nullable = false)
     private String content;
 
@@ -54,6 +59,7 @@ public class Post {
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private DummyTable file;
+
 
 
 

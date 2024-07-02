@@ -27,6 +27,7 @@ public class PostIndex {
     @Field(type = FieldType.Text, store = true, name = "title")
     private String title;
 
+
     @Nullable
     @Field(type = FieldType.Text, store = true, name = "content_sr", analyzer = "serbian_simple", searchAnalyzer = "serbian_simple")
     private String contentSr;
@@ -35,8 +36,19 @@ public class PostIndex {
     @Field(type = FieldType.Text, store = true, name = "content_en", analyzer = "english", searchAnalyzer = "english")
     private String contentEn;
 
+
     @Field(type = FieldType.Date, store = true, name = "creation_date")
     private LocalDate creationDate;
+
+    @Field(type = FieldType.Integer, store = true, name = "like_count")
+    private Integer likeCount;
+
+    public PostIndex(Integer id, String title, LocalDate creationDate) {
+        this.id = id;
+        this.title = title;
+        this.creationDate = creationDate;
+        this.likeCount = 0;
+    }
 
 
 }

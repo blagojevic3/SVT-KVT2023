@@ -8,14 +8,18 @@ import com.example.ProjekatSVT.model.Reaction;
 import com.example.ProjekatSVT.model.User;
 import com.example.ProjekatSVT.repository.PostRepository;
 import com.example.ProjekatSVT.repository.UserRepository;
+import com.example.ProjekatSVT.service.interfaces.SearchPostService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PostService implements IPostService{
 
     @Autowired
@@ -26,6 +30,8 @@ public class PostService implements IPostService{
 
     @Autowired
     private IUserService userService;
+
+    public final SearchPostService searchService;
 
     @Override
     public Post findPostByContent(String content) {
@@ -47,30 +53,32 @@ public class PostService implements IPostService{
         return null;
     }
 
-    @Override
-    public Post createPost(PostDTO postDTO) {
-
-        User user = userService.findById(postDTO.getUserId());
-        Post post = new Post();
-
-        post.setUser(user);
-        post.setId(postDTO.getId());
-        post.setContent(postDTO.getContent());
-        post.setCreationDate(LocalDateTime.now());
-
-
-        post = postRepository.save(post);
-        return post;
-
-
-    }
+//    @Override
+//    public Post createPost(PostDTO postDTO) {
+//
+//        User user = userService.findById(postDTO.getUserId());
+//        Post post = new Post();
+//
+//        post.setUser(user);
+//        post.setId(postDTO.getId());
+//        post.setContent(postDTO.getContent());
+//        post.setCreationDate(LocalDateTime.now());
+//
+//
+//        post = postRepository.save(post);
+//        return post;
+//
+//
+//    }
 
     @Override
     public List<Post> findAll() {return this.postRepository.findAll();}
 
-    @Override
-    public void save(Post post) {
-        this.postRepository.save(post);
+    @Transactional
+    public Post save(Post post) {
+        postRepository.save(post);
+        searchService.indexDocument(post);
+        return post;
     }
 
     @Override

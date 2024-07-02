@@ -3,6 +3,7 @@ package com.example.ProjekatSVT.service.impl;
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.json.JsonData;
 import com.example.ProjekatSVT.exceptionhandling.exception.MalformedQueryException;
 import com.example.ProjekatSVT.model.Group;
 import com.example.ProjekatSVT.repository.indexrepository.GroupIndexRepository;
@@ -32,6 +33,18 @@ public class GroupSearchServiceImpl implements SearchGroupService {
     private final GroupIndexRepository indexRepository;
     private final SearchService searchService;
 
+
+    @Override
+    @Transactional
+    public String indexDocument(Group group) {
+        GroupIndex newEntity = new GroupIndex(group.getId(), group.getName(), group.getDescription(), group.getCreationDate());
+
+
+        indexRepository.save(newEntity);
+
+        return group.getName();
+    }
+
     @Override
     public Page<GroupIndex> simpleSearch(List<String> keywords, Pageable pageable) {
 
@@ -51,6 +64,19 @@ public class GroupSearchServiceImpl implements SearchGroupService {
                         .withPageable(pageable);
 
         return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public GroupIndex updateGroupPostNum(Integer id) {
+        var searchQuery = new NativeQueryBuilder()
+                .withQuery(sb -> sb.match(
+                        m -> m.field("id").query(id)))
+                .build();
+
+        Page<GroupIndex> groups = runQuery(searchQuery);
+        GroupIndex group = groups.getContent().get(0);
+        group.setPostNumber(group.getPostNumber() + 1);
+        return indexRepository.save(group);
     }
 
     @Override
@@ -117,6 +143,26 @@ public class GroupSearchServiceImpl implements SearchGroupService {
         })))._toQuery();
     }
 
+
+    @Override
+    public Page<GroupIndex> rangeSearch(Integer min, Integer max, Pageable pageable) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(buildRangeSearchQuery(min, max))
+                        .withPageable(pageable);
+
+        return runQuery(searchQueryBuilder.build());
+    }
+    private Query buildRangeSearchQuery(Integer min, Integer max) {
+        return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
+            // Match Query - full-text search in other fields
+            // Matches documents with full-text search in other fields
+            b.must(sb -> sb.range(m -> m.field("post_number").gte(JsonData.of(min))));
+            b.must(sb -> sb.range(m -> m.field("post_number").lte(JsonData.of(max))));
+
+            return b;
+        })))._toQuery();
+    }
+
     @Override
     public Page<GroupIndex> searchGroupsByName(String name) {
         var searchQueryBuilder =
@@ -144,16 +190,7 @@ public class GroupSearchServiceImpl implements SearchGroupService {
         })))._toQuery();
     }
 
-    @Override
-    @Transactional
-    public String indexDocument(Group group) {
-        GroupIndex newEntity = new GroupIndex(group.getId(), group.getName(), group.getDescription(), group.getCreationDate(), group.getIsSuspended(), group.getSuspendedReason());
 
-
-        indexRepository.save(newEntity);
-
-        return group.getName();
-    }
 
     private Page<GroupIndex> runQuery(NativeQuery searchQuery) {
 

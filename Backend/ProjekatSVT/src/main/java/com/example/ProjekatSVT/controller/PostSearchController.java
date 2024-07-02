@@ -1,36 +1,38 @@
 package com.example.ProjekatSVT.controller;
 
+
 import com.example.ProjekatSVT.searchdto.SearchQueryDTO;
 import com.example.ProjekatSVT.searchmodel.GroupIndex;
-import com.example.ProjekatSVT.service.impl.GroupSearchServiceImpl;
+import com.example.ProjekatSVT.searchmodel.PostIndex;
+import com.example.ProjekatSVT.service.interfaces.SearchPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/search/groups")
+@RequestMapping("/api/search/posts")
 @RequiredArgsConstructor
-public class GroupSearchController {
+public class PostSearchController {
 
-    private final GroupSearchServiceImpl searchService;
+    private final SearchPostService searchService;
+
 
     @PostMapping("/simple")
-    public Page<GroupIndex> simpleSearch(@RequestBody SearchQueryDTO simpleSearchQuery,
+    public Page<PostIndex> simpleSearch(@RequestBody SearchQueryDTO simpleSearchQuery,
                                          Pageable pageable) {
         return searchService.simpleSearch(simpleSearchQuery.keywords(), pageable);
     }
 
     @PostMapping("/advanced")
-    public Page<GroupIndex> advancedSearch(@RequestBody SearchQueryDTO advancedSearchQuery,
+    public Page<PostIndex> advancedSearch(@RequestBody SearchQueryDTO advancedSearchQuery,
                                            Pageable pageable) {
         return searchService.advancedSearch(advancedSearchQuery.keywords(), pageable);
     }
 
     @PostMapping("/range/{min}:{max}")
-    public Page<GroupIndex> rangeSearch(@PathVariable Integer min, @PathVariable Integer max,
-                                        Pageable pageable) {
+    public Page<PostIndex> rangePostSearch(@PathVariable Integer min, @PathVariable Integer max,
+                                           Pageable pageable) {
         return searchService.rangeSearch(min, max, pageable);
     }
 }
-

@@ -15,7 +15,11 @@ public interface SearchGroupService {
 
     Page<GroupIndex> simpleSearch(List<String> keywords, Pageable pageable);
 
+    GroupIndex updateGroupPostNum(Integer id);
+
     Page<GroupIndex> advancedSearch(List<String> expression, Pageable pageable);
+
+    Page<GroupIndex> rangeSearch(Integer min, Integer max, Pageable pageable);
 
     Page<GroupIndex> searchGroupsByName(String name);
 

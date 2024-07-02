@@ -31,9 +31,19 @@ public class    GroupIndex {
     @Field(type = FieldType.Date)
     private LocalDate creationDate;
 
-    @Field(type = FieldType.Boolean)
-    private boolean isSuspended;
+
+    @Field(type = FieldType.Integer, store = true, name = "post_number")
+    private Integer postNumber;
 
     @Field(type = FieldType.Text)
     private String userId;
+
+
+    public GroupIndex(Integer id, String name, String description, LocalDate creationDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.creationDate = creationDate;
+        this.postNumber = 0;
+    }
 }
