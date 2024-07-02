@@ -28,6 +28,11 @@ public class DummyTable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
-    private String content;
+    @OneToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

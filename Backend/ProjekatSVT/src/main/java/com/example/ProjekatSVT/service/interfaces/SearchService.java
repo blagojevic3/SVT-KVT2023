@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface SearchService {
 
-    Page<DummyIndex> simpleSearch(List<String> keywords, Pageable pageable);
+    Page<DummyIndex> simpleSearch(List<String> keywords, Pageable pageable, String type);
 
     Page<DummyIndex> advancedSearch(List<String> expression, Pageable pageable);
 }

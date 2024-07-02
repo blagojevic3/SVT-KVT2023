@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class Group {
     private String description;
 
     @Column(name = "creationDate",nullable = false)
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "isSuspended",nullable = false)
     private Boolean isSuspended;
@@ -49,6 +50,13 @@ public class Group {
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Post> posts = new HashSet<Post>();   //contains
+
+    @OneToOne(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private DummyTable file;
+
+
+
 
 
 //

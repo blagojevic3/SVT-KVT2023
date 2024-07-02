@@ -12,11 +12,11 @@ public interface IGroupService {
 
     Group findGroupById(Integer id);
 
-    Group createGroup(GroupDTO groupDTO);
+//    Group createGroup(GroupDTO groupDTO);
 
     List<Group> findAll();
 
-    void save(Group group);
+    Group save(Group group);
 
     void delete(Integer id);
 }

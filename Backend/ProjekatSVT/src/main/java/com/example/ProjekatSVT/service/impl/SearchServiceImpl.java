@@ -25,9 +25,9 @@ public class SearchServiceImpl implements SearchService {
     private final ElasticsearchOperations elasticsearchTemplate;
 
     @Override
-    public Page<DummyIndex> simpleSearch(List<String> keywords, Pageable pageable) {
+    public Page<DummyIndex> simpleSearch(List<String> keywords, Pageable pageable, String type) {
         var searchQueryBuilder =
-            new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords))
+            new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords, type))
                 .withPageable(pageable);
 
         return runQuery(searchQueryBuilder.build());
@@ -48,7 +48,7 @@ public class SearchServiceImpl implements SearchService {
         return runQuery(searchQueryBuilder.build());
     }
 
-    private Query buildSimpleSearchQuery(List<String> tokens) {
+    private Query buildSimpleSearchQuery(List<String> tokens, String type) {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             tokens.forEach(token -> {
                 // Term Query - simplest
@@ -100,7 +100,15 @@ public class SearchServiceImpl implements SearchService {
                 // Range query - not applicable for dummy index, searches in the range from-to
             });
             return b;
-        })))._toQuery();
+        }))
+                .filter(fb -> {
+                    if ("group".equals(type)) {
+                        fb.exists(e -> e.field("group_id"));
+                    } else if ("post".equals(type)) {
+                        fb.exists(e -> e.field("post_id"));
+                    }
+                    return fb;
+                }))._toQuery();
     }
 
     private Query buildAdvancedSearchQuery(List<String> operands, String operation) {

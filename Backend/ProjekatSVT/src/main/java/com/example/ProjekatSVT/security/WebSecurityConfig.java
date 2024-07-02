@@ -72,11 +72,14 @@ public class WebSecurityConfig {
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
         http.authorizeRequests()
 //                .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
+
                 .antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/search/groups/simple").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/search/groups/advanced").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/all").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/users/password-change").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/groups/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/groups/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/groups/").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/posts/").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/posts/").permitAll()

@@ -51,6 +51,10 @@ public class Post {
     @JoinColumn(name = "groupId")
     private Group group;
 
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private DummyTable file;
+
 
 
 }

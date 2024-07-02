@@ -39,9 +39,15 @@ public class IndexingServiceImpl implements IndexingService {
 
     @Override
     @Transactional
-    public String indexDocument(MultipartFile documentFile) {
+    public DummyTable indexDocument(MultipartFile documentFile, String type, Integer id) {
         var newEntity = new DummyTable();
         var newIndex = new DummyIndex();
+
+        if (Objects.equals(type, "group")) {
+            newIndex.setGroupId(id);
+        } else if (Objects.equals(type, "post")) {
+            newIndex.setPostId(id);
+        }
 
         var title = Objects.requireNonNull(documentFile.getOriginalFilename()).split("\\.")[0];
         newIndex.setTitle(title);
@@ -65,7 +71,7 @@ public class IndexingServiceImpl implements IndexingService {
         newIndex.setDatabaseId(savedEntity.getId());
         dummyIndexRepository.save(newIndex);
 
-        return serverFilename;
+        return newEntity;
     }
 
     private String extractDocumentContent(MultipartFile multipartPdfFile) {
