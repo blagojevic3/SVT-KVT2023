@@ -24,4 +24,12 @@ public interface SearchPostService {
     Page<PostIndex> rangeSearch(Integer min, Integer max, Pageable pageable);
 
     Page<PostIndex> advancedSearch(List<String> expression, Pageable pageable);
+
+    Page<PostIndex> phraseSearchByTitle(String phrase);
+
+    Page<PostIndex> phraseSearchByContent(String phrase);
+
+    Page<PostIndex> fuzzySearchByTitle(String title);
+
+    Page<PostIndex> fuzzySearchByContent(String content);
 }

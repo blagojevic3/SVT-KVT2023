@@ -2,6 +2,8 @@ package com.example.ProjekatSVT.service.impl;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchPhraseQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonData;
 import com.example.ProjekatSVT.exceptionhandling.exception.MalformedQueryException;
@@ -190,6 +192,51 @@ public class GroupSearchServiceImpl implements SearchGroupService {
         })))._toQuery();
     }
 
+    private Query phraseSearchForName(String phrase) {
+        return MatchPhraseQuery.of(q -> q.field("name").query(phrase).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query phraseSearchForDescription(String phrase) {
+        return MatchPhraseQuery.of(q -> q.field("description").query(phrase).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query fuzzySearchForName(String name) {
+        return MatchQuery.of(q -> q.field("name").query(name).fuzziness(Fuzziness.ONE.asString()).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query fuzzySearchForDescription(String description) {
+        return MatchQuery.of(q -> q.field("description").query(description).fuzziness(Fuzziness.ONE.asString()).analyzer("serbian_simple"))._toQuery();
+    }
+
+
+    @Override
+    public Page<GroupIndex> phraseSearchByName(String phrase) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(phraseSearchForName(phrase));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<GroupIndex> phraseSearchByDescription(String phrase) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(phraseSearchForDescription(phrase));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<GroupIndex> fuzzySearchByName(String name) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(fuzzySearchForName(name));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<GroupIndex> fuzzySearchByDescription(String description) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(fuzzySearchForDescription(description));
+        return runQuery(searchQueryBuilder.build());
+
+    }
 
 
     private Page<GroupIndex> runQuery(NativeQuery searchQuery) {

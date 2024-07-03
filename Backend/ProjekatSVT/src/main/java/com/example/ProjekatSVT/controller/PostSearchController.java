@@ -8,6 +8,7 @@ import com.example.ProjekatSVT.service.interfaces.SearchPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,5 +35,29 @@ public class PostSearchController {
     public Page<PostIndex> rangePostSearch(@PathVariable Integer min, @PathVariable Integer max,
                                            Pageable pageable) {
         return searchService.rangeSearch(min, max, pageable);
+    }
+
+    @GetMapping("/fuzzy/title")
+    public ResponseEntity<Page<PostIndex>> searchByTitleFuzzy(@RequestParam String title) {
+        Page<PostIndex> results = searchService.fuzzySearchByTitle(title);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/fuzzy/content")
+    public ResponseEntity<Page<PostIndex>> searchByContentFuzzy(@RequestParam String content) {
+        Page<PostIndex> results = searchService.fuzzySearchByContent(content);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/phrase/title")
+    public ResponseEntity<Page<PostIndex>> searchByTitlePhrase(@RequestParam String phrase) {
+        Page<PostIndex> results = searchService.phraseSearchByTitle(phrase);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/phrase/content")
+    public ResponseEntity<Page<PostIndex>> searchByContentPhrase(@RequestParam String phrase) {
+        Page<PostIndex> results = searchService.phraseSearchByContent(phrase);
+        return ResponseEntity.ok(results);
     }
 }

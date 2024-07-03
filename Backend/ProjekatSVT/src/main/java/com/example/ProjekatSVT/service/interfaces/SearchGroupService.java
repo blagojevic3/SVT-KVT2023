@@ -28,4 +28,12 @@ public interface SearchGroupService {
     @Transactional
     String indexDocument(Group group);
 
+
+    Page<GroupIndex> phraseSearchByName(String phrase);
+
+    Page<GroupIndex> phraseSearchByDescription(String phrase);
+
+    Page<GroupIndex> fuzzySearchByName(String name);
+
+    Page<GroupIndex> fuzzySearchByDescription(String description);
 }

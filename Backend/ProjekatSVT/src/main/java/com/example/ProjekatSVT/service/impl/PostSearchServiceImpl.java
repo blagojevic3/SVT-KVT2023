@@ -2,6 +2,8 @@ package com.example.ProjekatSVT.service.impl;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchPhraseQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonData;
 import com.example.ProjekatSVT.exceptionhandling.exception.LoadingException;
@@ -174,6 +176,8 @@ public class PostSearchServiceImpl implements SearchPostService {
                 b.should(sb -> sb.match(
                         m -> m.field("title").fuzziness(Fuzziness.ONE.asString()).query(token)));
 
+                b.should(sb -> sb.match(m -> m.field("content").query(token)));
+
                 // Match Query - full-text search in other fields
                 // Matches documents with full-text search in other fields
                 b.should(sb -> sb.match(m -> m.field("content_sr").query(token)));
@@ -227,6 +231,52 @@ public class PostSearchServiceImpl implements SearchPostService {
 
             return b;
         })))._toQuery();
+    }
+
+    private Query phraseSearchForTitle(String phrase) {
+        return MatchPhraseQuery.of(q -> q.field("title").query(phrase).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query phraseSearchForContent(String phrase) {
+        return MatchPhraseQuery.of(q -> q.field("content").query(phrase).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query fuzzySearchForTitle(String title) {
+        return MatchQuery.of(q -> q.field("title").query(title).fuzziness(Fuzziness.ONE.asString()).analyzer("serbian_simple"))._toQuery();
+    }
+
+    private Query fuzzySearchForContent(String content) {
+        return MatchQuery.of(q -> q.field("content").query(content).fuzziness(Fuzziness.ONE.asString()).analyzer("serbian_simple"))._toQuery();
+    }
+
+
+    @Override
+    public Page<PostIndex> phraseSearchByTitle(String phrase) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(phraseSearchForTitle(phrase));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<PostIndex> phraseSearchByContent(String phrase) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(phraseSearchForContent(phrase));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<PostIndex> fuzzySearchByTitle(String title) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(fuzzySearchForTitle(title));
+        return runQuery(searchQueryBuilder.build());
+    }
+
+    @Override
+    public Page<PostIndex> fuzzySearchByContent(String content) {
+        var searchQueryBuilder =
+                new NativeQueryBuilder().withQuery(fuzzySearchForContent(content));
+        return runQuery(searchQueryBuilder.build());
+
     }
 
 
