@@ -67,4 +67,16 @@ export class ConfigService {
     return this._reactions_url;
   }
 
+  private _search_group_url = this._api_url+'/search/groups';
+
+  get search_group_url(): string {
+    return this._search_group_url;
+  }
+
+  private _search_post_url = this._api_url+'/search/posts';
+
+  get search_post_url(): string {
+    return this._search_post_url;
+  }
+
 }

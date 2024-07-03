@@ -32,7 +32,7 @@ public class    GroupIndex {
     private LocalDate creationDate;
 
 
-    @Field(type = FieldType.Integer, store = true, name = "post_number")
+    @Field(type = FieldType.Integer, store = true, name = "post_count")
     private Integer postNumber;
 
     @Field(type = FieldType.Text)

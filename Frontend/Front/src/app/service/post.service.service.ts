@@ -39,4 +39,11 @@ export class PostService {
         this.getPosts().subscribe(); // Refresh the posts after editing
       }));
   }
+
+  addFile(postId: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(`${this.config.post_url}/file/add/${postId}`, formData);
+  }
 }

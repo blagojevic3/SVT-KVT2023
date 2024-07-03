@@ -36,7 +36,11 @@ import { ProfilePageComponent } from './profile/profile-page/profile-page.compon
 import { AboutPageComponent } from './profile/about-page/about-page.component';
 import { CommentService } from './service/comment.service';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
-
+import { SearchGroupService } from './service/search/search-group.service';
+import { SearchPostService } from './service/search/search-post.service';
+import { SearchGroupsElasticComponent } from './search-groups-elastic/search-groups-elastic.component';
+import { ButtonComponent } from './button/button.component';
+import { SearchPostsElasticComponent } from './search-posts-elastic/search-posts-elastic.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,9 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     ProfilePageComponent,
     AboutPageComponent,
     EditProfileComponent,
+    SearchGroupsElasticComponent,
+    ButtonComponent,
+    SearchPostsElasticComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +86,9 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     UserService,
     ConfigService,
     PostService,
-    CommentService
+    CommentService,
+    SearchGroupService,
+    SearchPostService
   ],
   bootstrap: [AppComponent]
 })

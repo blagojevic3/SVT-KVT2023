@@ -31,7 +31,16 @@ export class AddPostComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(64),
         ]),
-      ]
+      ],
+      title: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(64),
+        ]),
+      ],
+      
     });
 
     this.currentUser = this.userService.getCurrentUser(); 

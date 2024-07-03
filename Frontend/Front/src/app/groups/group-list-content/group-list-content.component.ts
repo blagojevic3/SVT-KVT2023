@@ -27,4 +27,8 @@ export class GroupListContentComponent implements OnInit {
     this.router.navigate(['groups/create'])
   }
 
+  navigateToSearch() {
+    this.router.navigate(['groups/search']);
+  }
+
 }

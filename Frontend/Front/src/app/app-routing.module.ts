@@ -13,6 +13,9 @@ import { ProfilePageComponent } from './profile/profile-page/profile-page.compon
 import { AboutPageComponent } from './profile/about-page/about-page.component';
 
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { SearchGroupsElasticComponent } from './search-groups-elastic/search-groups-elastic.component';
+import { SearchPostsElasticComponent } from './search-posts-elastic/search-posts-elastic.component';
+
 
 const routes: Routes = [
   {
@@ -59,7 +62,9 @@ const routes: Routes = [
   {
     path: 'profile/edit',
     component: EditProfileComponent
-  }
+  },
+  { path: 'groups/search', component: SearchGroupsElasticComponent },
+  { path: 'posts/search', component: SearchPostsElasticComponent },
 ];
 
 @NgModule({

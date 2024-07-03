@@ -22,6 +22,10 @@
 .post-content {
   margin-bottom: 10px;
 }
+.post-title {
+  margin-bottom: 20px;
+  display: flex;
+}
 
 .post-comments {
   border-top: 1px solid #ccc;

@@ -8,6 +8,8 @@
       <button (click)="editPost(post.id, post.content)">
         <i class="fas fa-edit"></i> Edit
       </button>
+      <input type="file" (change)="onFileSelected($event, post.id)">
+      <button (click)="onFileSubmit(post.id)">Upload File</button>
     </div>
 
     <!-- Edit form -->
@@ -19,6 +21,10 @@
     </div>
 
     <!-- Post content -->
+
+    <div class="post-title" *ngIf="!editing || form.controls.id.value !== post.id">
+      <div><h2>{{ post.title }} </h2></div>
+    </div>
     <div class="post-content" *ngIf="!editing || form.controls.id.value !== post.id">
       <div>{{ post.content }}</div>
     </div>

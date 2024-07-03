@@ -1,0 +1,78 @@
+<form
+  [formGroup]="searchPosts"
+  (ngSubmit)="onSubmit()"
+  class="form flex-col form__login"
+>
+  <div class="form__group">
+    <input
+      type="text"
+      class="form__input"
+      formControlName="title"
+      placeholder="Post title"
+    />
+  </div>
+  <div class="form__group">
+    <input
+      type="text"
+      class="form__input"
+      formControlName="content"
+      placeholder="Post content"
+    />
+  </div>
+
+
+
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="simple" />
+    simple
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="advanced" />
+    advanced
+  </div>
+  
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="fuzzy" />
+    fuzzy
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="phraze" />
+    Phraze
+  </div>
+
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="rangeSearch" />
+    Range Search (Likes)
+  </div>
+  <div class="form__group" *ngIf="searchPosts.get('rangeSearch').value">
+    <input
+      type="number"
+      class="form__input"
+      formControlName="minLikesRange"
+      placeholder="Minimum Likes"
+    />
+    <input
+      type="number"
+      class="form__input"
+      formControlName="maxLikesRange"
+      placeholder="Maximum Likes"
+    />
+  </div>
+
+  <app-button
+    size="md"
+    color="blue"
+    text="Submit"
+    class="login__button"
+  ></app-button>
+</form>
+
+<div *ngIf="posts.length">
+  <h3>Search Results:</h3>
+  <ul>
+    <li *ngFor="let post of posts">
+      <h4>{{ post.title }}</h4>
+      <p>{{ post.content }}</p>
+    </li>
+  </ul>
+</div>

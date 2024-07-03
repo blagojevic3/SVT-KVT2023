@@ -158,8 +158,8 @@ public class GroupSearchServiceImpl implements SearchGroupService {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             // Match Query - full-text search in other fields
             // Matches documents with full-text search in other fields
-            b.must(sb -> sb.range(m -> m.field("post_number").gte(JsonData.of(min))));
-            b.must(sb -> sb.range(m -> m.field("post_number").lte(JsonData.of(max))));
+            b.must(sb -> sb.range(m -> m.field("post_count").gte(JsonData.of(min))));
+            b.must(sb -> sb.range(m -> m.field("post_count").lte(JsonData.of(max))));
 
             return b;
         })))._toQuery();

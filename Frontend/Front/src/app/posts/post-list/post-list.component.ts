@@ -26,6 +26,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   notification: DisplayMessage;
   returnUrl: string;
   currentUser: any;
+  selectedFiles: { [key: number]: File } = {}; // Store selected files by group ID
 
   constructor(
     private postService: PostService,
@@ -139,5 +140,23 @@ export class PostListComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.postService.edit(this.form.value).subscribe((result) => {
     });
+  }
+
+  onFileSelected(event: any, postId: number) {
+    this.selectedFiles[postId] = event.target.files[0];
+  }
+
+  onFileSubmit(postId: number) {
+    const file = this.selectedFiles[postId];
+    if (file) {
+      this.postService.addFile(postId, file).subscribe({
+        next: (res) => {
+          console.log('File uploaded successfully', res);
+        },
+        error: (err) => {
+          console.error('File upload failed', err);
+        }
+      });
+    }
   }
 }

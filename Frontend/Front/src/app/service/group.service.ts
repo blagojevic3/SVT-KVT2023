@@ -48,4 +48,11 @@ export class GroupService {
     }))
   }
 
+  addFile(groupId: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(`${this.config.group_url}/file/add/${groupId}`, formData);
+  }
+
 }

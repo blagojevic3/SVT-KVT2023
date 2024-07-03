@@ -1,35 +1,41 @@
 <div class="container">
     <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Desription</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let group of groups">
-                <td>{{group.name}}</td>
-                <td>{{group.description}}</td>
-                <td>
-                    <button (click)="deleteGroup(group.id)">delete</button>
-                    <button (click)="editGroup(group.id, group.name, group.description)">edit</button>
-                </td>
-            </tr>
-            
-        </tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+          <th>Upload File</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let group of groups">
+          <td>{{group.name}}</td>
+          <td>{{group.description}}</td>
+          <td>
+            <button (click)="deleteGroup(group.id)">Delete</button>
+            <button (click)="editGroup(group.id, group.name, group.description)">Edit</button>
+          </td>
+          <td>
+            <input type="file" (change)="onFileSelected($event, group.id)">
+            <button (click)="onFileSubmit(group.id)">Upload File</button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-<div *ngIf="editing" class="container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <label for="name_i" name="name_f">Name</label>
+  
+    <div *ngIf="editing" class="container">
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <label for="name_i">Name</label>
         <br>
         <input id="name_i" type="text" formControlName="name" required>
         <br>
-        <label for="desc_i" name="desc_f">Description</label>
+        <label for="desc_i">Description</label>
         <br>
-        <textarea id="desc_i" type="text" formControlName="description" required></textarea>
+        <textarea id="desc_i" formControlName="description" required></textarea>
         <br>
         <button type="submit">Save</button>
-    </form>
-</div>
-    
-</div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,73 @@
+<form
+  [formGroup]="searchGroups"
+  (ngSubmit)="onSubmit()"
+  class="form flex-col form__login"
+>
+  <div class="form__group">
+    <input
+      type="text"
+      class="form__input"
+      formControlName="name"
+      placeholder="Group name"
+    />
+  </div>
+  <div class="form__group">
+    <input
+      type="text"
+      class="form__input"
+      formControlName="description"
+      placeholder="Group description"
+    />
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="simple" />
+    simple
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="advanced" />
+    advanced
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="fuzzy" />
+    fuzzy
+  </div>
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="phraze" />
+    phraze
+  </div>
+
+  <div class="form__group">
+    <input type="checkbox" class="form__input" formControlName="rangeSearch" />
+    Range Search (Posts)
+  </div>
+  <div class="form__group" *ngIf="searchGroups.get('rangeSearch').value">
+    <input
+      type="number"
+      class="form__input"
+      formControlName="minPostsRange"
+      placeholder="Minimum Posts"
+    />
+    <input
+      type="number"
+      class="form__input"
+      formControlName="maxPostsRange"
+      placeholder="Maximum Posts"
+    />
+  </div>
+  <app-button
+    size="md"
+    color="blue"
+    text="Submit"
+    class="login__button"
+  ></app-button>
+</form>
+<div *ngIf="this.groups.length">
+  <h3>Search Results:</h3>
+  <ul>
+    <li *ngFor="let group of this.groups">
+      <h4>{{ group.name }}</h4>
+      <h4>{{ group.description }}</h4>
+      <p>{{ group.postNumber }}</p>
+    </li>
+  </ul>
+</div>

@@ -26,4 +26,8 @@ export class PostListContentComponent implements OnInit {
     this.router.navigate(['posts/create'])
   }
 
+  navigateToSearch() {
+    this.router.navigate(['posts/search']);
+  }
+
 }

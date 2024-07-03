@@ -197,8 +197,8 @@ public class PostSearchServiceImpl implements SearchPostService {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             // Match Query - full-text search in other fields
             // Matches documents with full-text search in other fields
-            b.must(sb -> sb.range(m -> m.field("like_number").gte(JsonData.of(min))));
-            b.must(sb -> sb.range(m -> m.field("like_number").lte(JsonData.of(max))));
+            b.must(sb -> sb.range(m -> m.field("like_count").gte(JsonData.of(min))));
+            b.must(sb -> sb.range(m -> m.field("like_count").lte(JsonData.of(max))));
 
             return b;
         })))._toQuery();
