@@ -6,7 +6,7 @@ import { SearchPostService } from '../service/search/search-post.service';
 @Component({
   selector: 'app-search-posts-elastic',
   templateUrl: './search-posts-elastic.component.html',
-  styleUrls: ['./search-posts-elastic.component.scss']
+  styleUrls: ['./search-posts-elastic.component.css']
 })
 export class SearchPostsElasticComponent {
   searchPosts: FormGroup;

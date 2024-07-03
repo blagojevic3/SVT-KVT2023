@@ -2,19 +2,20 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GroupIndex } from 'src/app/model/GroupIndex';
 import { SearchGroupService } from '../service/search/search-group.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-search-groups-elastic',
   templateUrl: './search-groups-elastic.component.html',
-  styleUrls: ['./search-groups-elastic.component.scss']
+  styleUrls: ['./search-groups-elastic.component.css']
 })
 export class SearchGroupsElasticComponent {
   searchGroups: FormGroup;
   groups: GroupIndex[];
   constructor(
     private formBuilder: FormBuilder,
-    private elasticGroupService: SearchGroupService
+    private elasticGroupService: SearchGroupService,
+    private cdr: ChangeDetectorRef
   ) {
     this.groups = [];
     this.searchGroups = this.formBuilder.group({
@@ -48,6 +49,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       } else if (description) {
@@ -55,6 +57,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       }
@@ -64,6 +67,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       } else if (description) {
@@ -71,6 +75,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       }
@@ -80,6 +85,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       } else if (description) {
@@ -87,6 +93,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       }
@@ -96,6 +103,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       } else if (description) {
@@ -103,6 +111,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       }
@@ -112,6 +121,7 @@ export class SearchGroupsElasticComponent {
           next: (res) => {
             console.log(res);
             this.groups = res;
+            this.cdr.detectChanges(); // Trigger change detection
           },
         });
       } else {

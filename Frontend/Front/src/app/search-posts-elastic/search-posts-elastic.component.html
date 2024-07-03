@@ -1,7 +1,7 @@
 <form
   [formGroup]="searchPosts"
   (ngSubmit)="onSubmit()"
-  class="form flex-col form__login"
+  class="form flex-col form__search"
 >
   <div class="form__group">
     <input
@@ -20,29 +20,45 @@
     />
   </div>
 
-
-
   <div class="form__group">
-    <input type="checkbox" class="form__input" formControlName="simple" />
-    simple
+    <label>
+      <input type="checkbox" class="form__checkbox" formControlName="simple" />
+      Simple
+    </label>
   </div>
   <div class="form__group">
-    <input type="checkbox" class="form__input" formControlName="advanced" />
-    advanced
-  </div>
-  
-  <div class="form__group">
-    <input type="checkbox" class="form__input" formControlName="fuzzy" />
-    fuzzy
-  </div>
-  <div class="form__group">
-    <input type="checkbox" class="form__input" formControlName="phraze" />
-    Phraze
+    <label>
+      <input
+        type="checkbox"
+        class="form__checkbox"
+        formControlName="advanced"
+      />
+      Advanced
+    </label>
   </div>
 
   <div class="form__group">
-    <input type="checkbox" class="form__input" formControlName="rangeSearch" />
-    Range Search (Likes)
+    <label>
+      <input type="checkbox" class="form__checkbox" formControlName="fuzzy" />
+      Fuzzy
+    </label>
+  </div>
+  <div class="form__group">
+    <label>
+      <input type="checkbox" class="form__checkbox" formControlName="phraze" />
+      Phrase
+    </label>
+  </div>
+
+  <div class="form__group">
+    <label>
+      <input
+        type="checkbox"
+        class="form__checkbox"
+        formControlName="rangeSearch"
+      />
+      Range Search (Likes)
+    </label>
   </div>
   <div class="form__group" *ngIf="searchPosts.get('rangeSearch').value">
     <input
@@ -63,14 +79,14 @@
     size="md"
     color="blue"
     text="Submit"
-    class="login__button"
+    class="search__button"
   ></app-button>
 </form>
 
-<div *ngIf="posts.length">
+<div *ngIf="posts.length" class="search-results">
   <h3>Search Results:</h3>
   <ul>
-    <li *ngFor="let post of posts">
+    <li *ngFor="let post of posts" class="search-results__item">
       <h4>{{ post.title }}</h4>
       <p>{{ post.content }}</p>
     </li>
