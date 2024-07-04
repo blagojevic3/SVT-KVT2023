@@ -23,6 +23,7 @@ export class SearchGroupsElasticComponent {
       description: [''],
       simple: [false],
       advanced: [false],
+      operation: ['AND'],
       phraze: [false],
       fuzzy: [false],
       rangeSearch: [false],
@@ -36,6 +37,7 @@ export class SearchGroupsElasticComponent {
     const description = this.searchGroups.get('description').value;
     const simple = this.searchGroups.get('simple').value;
     const advanced = this.searchGroups.get('advanced').value;
+    const operation = this.searchGroups.get('operation').value;
     const phraze = this.searchGroups.get('phraze').value;
     const fuzzy = this.searchGroups.get('fuzzy').value;
     const rangeSearch = this.searchGroups.get('rangeSearch').value;
@@ -62,23 +64,16 @@ export class SearchGroupsElasticComponent {
         });
       }
     } else if (advanced) {
-      if (name) {
-        this.elasticGroupService.advancedSearch([name], pageable).subscribe({
+      if (name && description) {
+        const keywords = [`name:${name}`, operation, `description:${description}`];
+        this.elasticGroupService.advancedSearch(keywords, pageable).subscribe({
           next: (res) => {
             console.log(res);
             this.groups = res;
             this.cdr.detectChanges(); // Trigger change detection
           },
         });
-      } else if (description) {
-        this.elasticGroupService.advancedSearch([description], pageable).subscribe({
-          next: (res) => {
-            console.log(res);
-            this.groups = res;
-            this.cdr.detectChanges(); // Trigger change detection
-          },
-        });
-      }
+      } 
     } else if (phraze) {
       if (name) {
         this.elasticGroupService.searchByNamePhrase(name).subscribe({

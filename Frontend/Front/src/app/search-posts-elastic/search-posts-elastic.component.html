@@ -35,6 +35,19 @@
       />
       Advanced
     </label>
+
+    <label *ngIf="searchPosts.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="AND" />
+      AND
+    </label>
+    <label *ngIf="searchPosts.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="OR" />
+      OR
+    </label>
+    <label *ngIf="searchPosts.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="NOT" />
+      NOT
+    </label>
   </div>
 
   <div class="form__group">

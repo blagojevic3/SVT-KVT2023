@@ -27,12 +27,20 @@
   </div>
   <div class="form__group">
     <label>
-      <input
-        type="checkbox"
-        class="form__checkbox"
-        formControlName="advanced"
-      />
+      <input type="checkbox" class="form__checkbox" formControlName="advanced" />
       Advanced
+    </label>
+    <label *ngIf="searchGroups.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="AND" />
+      AND
+    </label>
+    <label *ngIf="searchGroups.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="OR" />
+      OR
+    </label>
+    <label *ngIf="searchGroups.get('advanced').value">
+      <input type="radio" class="form__radio" formControlName="operation" value="NOT" />
+      NOT
     </label>
   </div>
   <div class="form__group">

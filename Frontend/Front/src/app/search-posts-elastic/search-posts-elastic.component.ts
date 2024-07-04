@@ -22,6 +22,7 @@ export class SearchPostsElasticComponent {
       content: [''],
       simple: [false],
       advanced: [false],
+      operation: ['AND'],
       phraze: [false],
       fuzzy: [false],
       rangeSearch: [false],
@@ -35,6 +36,7 @@ export class SearchPostsElasticComponent {
     const content = this.searchPosts.get('content').value;
     const simple = this.searchPosts.get('simple').value;
     const advanced = this.searchPosts.get('advanced').value;
+    const operation = this.searchPosts.get('operation').value;
     const phraze = this.searchPosts.get('phraze').value;
     const fuzzy = this.searchPosts.get('fuzzy').value;
     const rangeSearch = this.searchPosts.get('rangeSearch').value;
@@ -59,8 +61,9 @@ export class SearchPostsElasticComponent {
         });
       }
     } else if (advanced) {
-      if (title) {
-        this.elasticPostService.advancedSearch([title], pageable).subscribe({
+      if (title && content) {
+        const keywords = [`title:${title}`, operation, `content:${content}`];
+        this.elasticPostService.advancedSearch(keywords, pageable).subscribe({
           next: (res) => {
             console.log(res);
             this.posts = res;
